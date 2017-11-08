@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Memory game</title>
+    <style type="text/css">
+        div.row {
+            background-color: yellow;
+            width: 100%;
+            padding: 2px;
+        }
+
+        div.row div.cell {
+            background-color: silver;
+            width: 200px;
+            height: 200px;
+            display: inline-block;
+            text-align: center;
+            margin: 1px;
+            cursor: pointer;
+        }
+
+        .game-result {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            display: none;
+        }
+
+        #won-game {
+            background-color: green;
+        }
+
+        #lost-game {
+            background-color: red;
+        }
+    </style>
+    <script>
+        function shuffle(arr) {
+            var arrCopy = arr.slice();
+            var arrResult = [];
+
+            while (arrCopy.length > 0) {
+                var lastIndex = arrCopy.length - 1;
+                var randomIndex = parseInt(Math.random() * lastIndex)
+                var removedItem = arrCopy.splice(randomIndex, 1)
+                arrResult.push(removedItem[0]);
+            }
+
+            return arrResult;
+        }
+
+        var colors = ['blue', 'black', 'green', 'white', 'red', 'pink', 'purple', 'orange'];
+        var allColors = shuffle(colors.concat(colors))
+        var game = {
+            locked: false,
+            lostMoves: 0,
+            maxLostMoves: 10,
+            moves: [],
+        }
+        var cells, tableGameContainer, wonGameContainer, lostGameContainer;
+
+        function gameWon() {
+            for (var i = 0; i < cells.length; i++) {
+                if (!cells[i].hasAttribute('data-locked')) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function onTimesUp() {
+            var move2 = game.moves.pop(),
+                move1 = game.moves.pop(),
+                color1 = move1.getAttribute('data-color'),
+                color2 = move2.getAttribute('data-color');
+
+            if (color1 === color2) {
+                move1.style.backgroundColor = color1;
+                move2.style.backgroundColor = color2;
+                move1.setAttribute('data-locked', true);
+                move2.setAttribute('data-locked', true);
+            } else {
+                move1.style.backgroundColor = 'silver';
+                move2.style.backgroundColor = 'silver';
+                game.lostMoves++;
+            }
+            game.locked = false;
+
+            if (gameWon()) {
+                tableGameContainer.style.display = 'none';
+                wonGameContainer.style.display = 'block';
+            } else if (game.lostMoves >= game.maxLostMoves) {
+                tableGameContainer.style.display = 'none';
+                lostGameContainer.style.display = 'block';
+            }
+        }
+
+        function onCellClick() {
+            var self = this,
+                col = parseInt(self.getAttribute('data-col')),
+                row = parseInt(self.getAttribute('data-row')),
+                color = self.getAttribute('data-color'),
+                dataLocked = self.hasAttribute('data-locked');
+
+            if (!game.locked && !dataLocked) {
+                self.style.backgroundColor = color;
+                game.moves.push(self);
+
+                if (game.moves.length === 2) {
+                    game.locked = true;
+                    setTimeout(onTimesUp, 500)
+                }
+
+            }
+        }
+
+        window.onload = function () {
+            cells = document.getElementsByClassName('cell');
+            tableGameContainer = document.getElementById('table-game');
+            wonGameContainer = document.getElementById('won-game');
+            lostGameContainer = document.getElementById('lost-game');
+
+            for (var i = 0; i < cells.length; i++) {
+                var cell = cells[i];
+                cell.onclick = onCellClick;
+                cell.setAttribute('data-color', allColors[i])
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="container" style="width:820px;height:820px;margin:0 auto;position:relative;">
+        <div id="table-game">
+            <div class="row">
+                <div class="cell" data-row="0" data-col="0">
+                    <h1>0 - 0</h1>
+                </div>
+                <div class="cell" data-row="0" data-col="1">
+                    <h1>0 - 1</h1>
+                </div>
+                <div class="cell" data-row="0" data-col="2">
+                    <h1>0 - 2</h1>
+                </div>
+                <div class="cell" data-row="0" data-col="3">
+                    <h1>0 - 3</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell" data-row="1" data-col="0">
+                    <h1>1 - 0</h1>
+                </div>
+                <div class="cell" data-row="1" data-col="1">
+                    <h1>1 - 1</h1>
+                </div>
+                <div class="cell" data-row="1" data-col="2">
+                    <h1>1 - 2</h1>
+                </div>
+                <div class="cell" data-row="1" data-col="3">
+                    <h1>1 - 3</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell" data-row="2" data-col="0">
+                    <h1>2 - 0</h1>
+                </div>
+                <div class="cell" data-row="2" data-col="1">
+                    <h1>2 - 1</h1>
+                </div>
+                <div class="cell" data-row="2" data-col="2">
+                    <h1>2 - 2</h1>
+                </div>
+                <div class="cell" data-row="2" data-col="3">
+                    <h1>2 - 3</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell" data-row="3" data-col="0">
+                    <h1>3 - 0</h1>
+                </div>
+                <div class="cell" data-row="3" data-col="1">
+                    <h1>3 - 1</h1>
+                </div>
+                <div class="cell" data-row="3" data-col="2">
+                    <h1>3 - 2</h1>
+                </div>
+                <div class="cell" data-row="3" data-col="3">
+                    <h1>3 - 3</h1>
+                </div>
+            </div>
+        </div>
+        <div id="won-game" class="game-result">
+            <h1>Congratulations, you won the game!</h1>
+        </div>
+        <div id="lost-game" class="game-result">
+            <h1>What a shame, you lose!</h1>
+        </div>
+
+    </div>
+</body>
+
+</html>
