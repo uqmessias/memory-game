@@ -1,0 +1,33 @@
+div.row {
+    background-color: yellow;
+    width: 100%;
+    padding: 2px;
+}
+
+div.row div.cell {
+    background-color: silver;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    text-align: center;
+    margin: 1px;
+    cursor: pointer;
+}
+
+.game-result {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: none;
+}
+
+#won-game {
+    background-color: green;
+}
+
+#lost-game {
+    background-color: red;
+}
