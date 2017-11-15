@@ -1,0 +1,23 @@
+.game-box {
+    background-color: transparent;
+    width: 650px;
+    height: 650px;
+    margin: 0 auto;
+}
+
+.row {
+    display: inline-block;
+    margin: 5px 0px;
+}
+
+.no-touchable-box {
+    border: 1px dotted red;
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+    cursor: not-allowed;
+}
+
+.touchable-box {
+    cursor: pointer;
+}
