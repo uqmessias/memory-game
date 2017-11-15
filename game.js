@@ -45,6 +45,7 @@ function showSteps(steps) {
         }
     } else {
         game.showingSteps = false;
+        startTimer();
     }
 }
 
@@ -54,6 +55,15 @@ function onStartLevel() {
 
     game.steps = getStepsForCurrentLevel();
     showSteps(game.steps.slice());
+}
+
+function startTimer() {
+    // when the time is up call timeIsUp();
+    // write the time that last in the timer.innerHTML
+}
+
+function timeIsUp() {
+    endGame(false);
 }
 
 function getStepsForCurrentLevel() {
