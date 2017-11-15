@@ -1,5 +1,5 @@
 .game-box {
-    background-color: yellow;
+    background-color: transparent;
     width: 650px;
     height: 650px;
     margin: 0 auto;
@@ -20,6 +20,7 @@
 
 .touchable-box {
     cursor: pointer;
+    opacity: 0.2;
 }
 
 .instuctions-box {
@@ -31,9 +32,18 @@
     border: 1px solid silver;
     background-color: white;
     width: 200px;
-    height: 100px;
+    height: 80px;
     font-weight: bold;
 }
 .instuctions-box button:disabled {
     background-color: silver;
+}
+.instuctions-box span {
+    background-color:white;
+    display: block;
+    width: 200px;
+    height: 40px;
+    color: green;
+    text-align: center;
+    font-size: 35px;
 }
